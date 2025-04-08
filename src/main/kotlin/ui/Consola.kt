@@ -23,20 +23,17 @@ class Consola : IEntradaSalida {
     override fun pedirOperador(): String {
         mostrarMensaje("Introduce un operador > ")
         val operador = scanner.nextLine()
-        val resultado = Operadores.getOperador(operador)
-        return resultado?.operator ?: throw IllegalArgumentException("Introduce un operador válido.")
+        val resultado = Operadores.getOperador(operador) ?: throw IllegalArgumentException("Introduce un operador válido.")
+
+        return resultado.operator
     }
 
     override fun pedirNumero(): Double {
         mostrarMensaje("Introduce un número > ")
-        return try {
-            val numero = scanner.nextDouble()
-            scanner.nextLine()
-            numero
-        } catch (e: InputMismatchException) {
-            scanner.nextLine()
-            throw IllegalArgumentException("Introduce un número válido.")
-        }
+        val entrada = scanner.nextLine()
+        val numero = entrada.toDoubleOrNull() ?: throw IllegalArgumentException("Introduce un número válido.")
+
+        return numero
     }
 
     private fun pausar() {
